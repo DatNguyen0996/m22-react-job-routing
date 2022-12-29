@@ -7,7 +7,7 @@ import NewLogIn from "../components/NewLogIn";
 
 export const pageContext = createContext({});
 
-function HomePage({ jobList }) {
+function HomePage({ jobList, dataError, isLoaded }) {
   const datalogin = { username: "DatNguyen", password: "12345" };
 
   const [username, setUsername] = useState("");
@@ -76,34 +76,46 @@ function HomePage({ jobList }) {
           <Route
             path="/"
             element={
-              <>
-                <JobList
-                  jobList={filteredJob}
-                  islogined={islogined}
-                  setIslogined={setIslogined}
-                />
-                <PageSelect
-                  handlePage={handlePage}
-                  numberOfPage={numberOfPage}
-                />
-              </>
+              dataError ? (
+                <div className="error">ERROR: can't connect to server</div>
+              ) : isLoaded ? (
+                <>
+                  <JobList
+                    jobList={filteredJob}
+                    islogined={islogined}
+                    setIslogined={setIslogined}
+                  />
+                  <PageSelect
+                    handlePage={handlePage}
+                    numberOfPage={numberOfPage}
+                  />
+                </>
+              ) : (
+                <div>Loading...</div>
+              )
             }
           />
 
           <Route
             path="/:id"
             element={
-              <>
-                <JobList
-                  jobList={filteredJob}
-                  islogined={islogined}
-                  setIslogined={setIslogined}
-                />
-                <PageSelect
-                  handlePage={handlePage}
-                  numberOfPage={numberOfPage}
-                />
-              </>
+              dataError ? (
+                <div className="error">ERROR: can't connect to server</div>
+              ) : isLoaded ? (
+                <>
+                  <JobList
+                    jobList={filteredJob}
+                    islogined={islogined}
+                    setIslogined={setIslogined}
+                  />
+                  <PageSelect
+                    handlePage={handlePage}
+                    numberOfPage={numberOfPage}
+                  />
+                </>
+              ) : (
+                <div>Loading...</div>
+              )
             }
           />
           <Route
